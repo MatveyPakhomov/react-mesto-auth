@@ -1,0 +1,14 @@
+.card {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  background: white;
+  min-width: 282px;
+  min-height: 361px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  position: relative;
+}

@@ -1,0 +1,15 @@
+.footer__title {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 1.2;
+  color: #545454;
+  margin: 0 auto;
+  margin: 0 auto 60px;
+}
+
+@media screen and (max-width: 619px) {
+  .footer__title {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,8 @@
+.card__section {
+  width: 85%;
+  max-width: 246px;
+  min-height: calc(100% - 282px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

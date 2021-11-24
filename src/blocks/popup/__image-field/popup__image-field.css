@@ -1,0 +1,16 @@
+.popup__image-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  min-width: 320px;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 619px) {
+  .popup__image-field {
+    padding: 0 40px;
+  }
+}

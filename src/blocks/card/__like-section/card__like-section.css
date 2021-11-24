@@ -1,0 +1,11 @@
+.card__like-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* transition: opacity 0.2s ease-in-out; */
+}
+
+.card__like-section:hover {
+  opacity: 0.5;
+}

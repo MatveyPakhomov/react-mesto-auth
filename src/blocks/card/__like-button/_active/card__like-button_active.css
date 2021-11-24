@@ -1,0 +1,11 @@
+.card__like-button_active {
+  background: no-repeat url('../../../../images/element-like-button-active.svg');
+  width: 22px;
+  height: 19px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  margin-bottom: 2px;
+}
