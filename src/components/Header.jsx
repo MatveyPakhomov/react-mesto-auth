@@ -6,7 +6,7 @@ function Header() {
   return(
     <header className="header page__header">
       <img src={headerLogo} alt="Логотип: Место - Россия" className="header__logo" />
-      <Link to="/signin" className="header__link">Войти</Link>
+      <Link to="/sign-in" className="header__link">Войти</Link>
     </header>
   );
 }

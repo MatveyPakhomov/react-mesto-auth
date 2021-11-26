@@ -11,11 +11,11 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import { cardConfig } from '../utils/utils';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
-// import ProtectedRoute from './ProptectedRoute';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -24,6 +24,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState("");
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCardList()])
@@ -111,21 +112,25 @@ function App() {
       <div className="App">
         <div className="page">
           <Header />
-
           <Routes>
-            <Route exact path="/" element={
-              <Main
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              cards={cards}
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute
+                  component={Main}
+                  loggedIn={loggedIn}
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                  cards={cards}
+                />
+              }
             />
-            }/>
-            <Route path="/signin" element={<Login />} />
-            <Route path="/signup" element={<Register />}/>
+            <Route path="/sign-in" element={<Login />} />
+            <Route path="/sign-up" element={<Register />} />
           </Routes>
 
           <Footer />

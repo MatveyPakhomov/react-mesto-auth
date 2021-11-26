@@ -18,7 +18,7 @@ function Register() {
         <button type="submit" onSubmit={handleSubmit} className="register__submit-button">Зарегистрироваться</button>
         <section className="register__section">
           <p className="register__signin">Уже зарегистрированы?</p>
-          <Link to="signin" className="register__login-link">Войти</Link>
+          <Link to="sign-in" className="register__login-link">Войти</Link>
         </section>
       </form>
     </div>
