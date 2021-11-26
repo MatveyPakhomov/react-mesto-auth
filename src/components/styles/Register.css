@@ -10,7 +10,7 @@
 }
 
 .register__title {
-  font-family: 'Inter', 'Arial', sans-serif;
+  font-family: "Inter", "Arial", sans-serif;
   font-weight: 900;
   font-size: 24px;
   line-height: 1.2;
@@ -28,7 +28,7 @@
 }
 
 .register__input {
-  font-family: 'Inter', 'Arial', sans-serif;
+  font-family: "Inter", "Arial", sans-serif;
   color: white;
   padding: 0;
   font-size: 14px;
@@ -69,7 +69,6 @@
 .register__section {
   display: flex;
   justify-content: center;
-
 }
 
 .register__signin {

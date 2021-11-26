@@ -1,10 +1,10 @@
 export const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveButtonClass: 'popup__submit-button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__submit-button",
+  inactiveButtonClass: "popup__submit-button_inactive",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_active",
 };
 
 export function cardConfig(data) {
@@ -16,7 +16,7 @@ export function cardConfig(data) {
     title: data.name,
     alt: data.name,
     likes: data.likes,
-  }
+  };
 }
 
 // //формы для валидации

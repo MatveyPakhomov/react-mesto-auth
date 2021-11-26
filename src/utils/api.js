@@ -12,77 +12,69 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(this.url + '/users/me', {
+    return fetch(this.url + "/users/me", {
       headers: this.headers,
-    })
-      .then(this._checkResponse)
+    }).then(this._checkResponse);
   }
 
   getCardList() {
-    return fetch(this.url + '/cards', {
-      headers: this.headers
-    })
-      .then(this._checkResponse)
+    return fetch(this.url + "/cards", {
+      headers: this.headers,
+    }).then(this._checkResponse);
   }
 
   setUserInfo(data) {
-    return fetch(this.url + '/users/me', {
-      method: 'PATCH',
+    return fetch(this.url + "/users/me", {
+      method: "PATCH",
       headers: this.headers,
-      body: JSON.stringify(data)
-    })
-      .then(this._checkResponse)
+      body: JSON.stringify(data),
+    }).then(this._checkResponse);
   }
 
   addNewCard(data) {
-    return fetch(this.url + '/cards', {
-      method: 'POST',
+    return fetch(this.url + "/cards", {
+      method: "POST",
       headers: this.headers,
-      body: JSON.stringify(data)
-    })
-      .then(this._checkResponse)
+      body: JSON.stringify(data),
+    }).then(this._checkResponse);
   }
 
   setUserAvatar(data) {
-    return fetch(this.url + '/users/me/avatar', {
-      method: 'PATCH',
+    return fetch(this.url + "/users/me/avatar", {
+      method: "PATCH",
       headers: this.headers,
-      body: JSON.stringify(data)
-    })
-      .then(this._checkResponse)
+      body: JSON.stringify(data),
+    }).then(this._checkResponse);
   }
 
   deleteCard(cardId) {
     return fetch(this.url + `/cards/${cardId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: this.headers,
-    })
-      .then(this._checkResponse)
+    }).then(this._checkResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
     if (!isLiked) {
       return fetch(this.url + `/cards/likes/${cardId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: this.headers,
-      })
-        .then(this._checkResponse)
-      } else {
-        return fetch(this.url + `/cards/likes/${cardId}`, {
-          method: 'DELETE',
-          headers: this.headers,
-        })
-          .then(this._checkResponse)
-      }
+      }).then(this._checkResponse);
+    } else {
+      return fetch(this.url + `/cards/likes/${cardId}`, {
+        method: "DELETE",
+        headers: this.headers,
+      }).then(this._checkResponse);
     }
   }
+}
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-27',
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-27",
   headers: {
-    authorization: 'df65ab57-8f59-4984-a17c-2f08d584d2db',
-    'Content-Type': 'application/json'
-  }
+    authorization: "df65ab57-8f59-4984-a17c-2f08d584d2db",
+    "Content-Type": "application/json",
+  },
 });
 
 export default api;

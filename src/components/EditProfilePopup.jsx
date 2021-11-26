@@ -4,15 +4,15 @@ import { CurrentUserContext } from "../context/CurrentUserContext";
 
 function EditProfilePopup(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
 
   function handleChangeName(e) {
-    setName(e.target.value)
+    setName(e.target.value);
   }
 
   function handleChangeDescription(e) {
-    setDescription(e.target.value)
+    setDescription(e.target.value);
   }
 
   // После загрузки текущего пользователя из API
@@ -42,15 +42,37 @@ function EditProfilePopup(props) {
       onSubmit={handleSubmit}
     >
       <section className="popup__section">
-        <input type="text" id="edit-title" value={name || ''} onChange={handleChangeName} name="name" className="popup__input popup__input_value_name" placeholder="Имя" required minLength="2" maxLength="40" />
+        <input
+          type="text"
+          id="edit-title"
+          value={name || ""}
+          onChange={handleChangeName}
+          name="name"
+          className="popup__input popup__input_value_name"
+          placeholder="Имя"
+          required
+          minLength="2"
+          maxLength="40"
+        />
         <span id="edit-title-error" className="popup__input-error"></span>
-        </section>
+      </section>
       <section className="popup__section">
-        <input type="text" id="edit-subtitle" value={description || ''} onChange={handleChangeDescription} name="link" className="popup__input popup__input_value_job" placeholder="Вид деятельности" required minLength="2" maxLength="200" />
+        <input
+          type="text"
+          id="edit-subtitle"
+          value={description || ""}
+          onChange={handleChangeDescription}
+          name="link"
+          className="popup__input popup__input_value_job"
+          placeholder="Вид деятельности"
+          required
+          minLength="2"
+          maxLength="200"
+        />
         <span id="edit-subtitle-error" className="popup__input-error"></span>
       </section>
     </PopupWithForm>
-  )
+  );
 }
 
-export default EditProfilePopup
+export default EditProfilePopup;
