@@ -11,14 +11,14 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import { cardConfig } from "../utils/utils";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import * as auth from "../utils/auth"
+import * as auth from "../utils/auth";
 
-function App() {
+export default function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -27,7 +27,9 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState("");
   const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [userData, setUserData] = React.useState({});
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCardList()])
@@ -119,13 +121,72 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleLogin(email, password) {
+    return auth
+      .authorize(email, password)
+      .then((data) => {
+        if (!data) {
+          throw new Error("Что-то пошло не так!");
+        }
+        if (data.token) {
+          setLoggedIn(true);
+          localStorage.setItem("token", data.token);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleRegister(email, password) {
+    return auth
+      .register(email, password)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 400) {
+          throw new Error("Что-то пошло не так!");
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function getAuthUserInfo(token) {
+    auth
+      .getContent(token)
+      .then((res) => {
+        setUserData({
+          email: res.data.email,
+          title: "Выйти",
+          link: "/sign-in",
+        });
+        setLoggedIn(true);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  }
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      getAuthUserInfo(token);
+    }
+  }, [loggedIn]);
+
+  function handleSignOut() {
+    localStorage.removeItem("token");
+    navigate("/sign-in");
+    setUserData({
+      title: "Регистрация",
+      link: "/sign-up",
+    });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="page">
-          <Header />
+          <Header userData={userData} onSignOut={handleSignOut} />
           <Routes>
             <Route
+              exact
               path="/"
               element={
                 <ProtectedRoute
@@ -141,8 +202,12 @@ function App() {
                 />
               }
             />
-            <Route path="/sign-in" element={<Login />} />
-            <Route path="/sign-up" element={<Register />} />
+            <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+            <Route
+              path="/sign-up"
+              element={<Register onRegister={handleRegister} />}
+            />
+            <Route element={<Navigate to={!loggedIn ? "sign-in" : "/"} />} />
           </Routes>
 
           <Footer />
@@ -174,5 +239,3 @@ function App() {
     </CurrentUserContext.Provider>
   );
 }
-
-export default App;

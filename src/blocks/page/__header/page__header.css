@@ -1,6 +1,4 @@
 .page__header {
-  display: flex;
-  justify-content: space-between;
   margin: 0 auto 38px;
   border-bottom: 1px solid #545454B2;
 }

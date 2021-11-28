@@ -1,0 +1,11 @@
+.header__section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 41px;
+}
+
+@media screen and (max-width: 619px) {
+  .header__section {
+    margin-bottom: 30px;
+  }
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
-function Card(props) {
+export default function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const isOwn = props.ownerId === currentUser._id;
@@ -55,5 +55,3 @@ function Card(props) {
     </li>
   );
 }
-
-export default Card;

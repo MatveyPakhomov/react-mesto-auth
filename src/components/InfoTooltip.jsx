@@ -3,7 +3,7 @@ import "./styles/InfoTooltip.css";
 import failImage from "../images/fail.svg";
 import successImage from "../images/success.svg";
 
-function InfoTooltip(props) {
+export default function InfoTooltip(props) {
   return (
     <div className={`infoTooltip ${props.card ? "infoTooltip_opened" : ""}`}>
       <div className="infoTooltip__container">
@@ -23,5 +23,3 @@ function InfoTooltip(props) {
     </div>
   );
 }
-
-export default InfoTooltip;

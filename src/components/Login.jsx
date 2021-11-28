@@ -1,10 +1,35 @@
 import React from "react";
 import "./styles/Login.css";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+export default function Login(props) {
+  const [state, setState] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+  const [error, setError] = React.useState("");
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("hello");
+    // сюда добавим логику обработки формы регистрации
+    let { email, password } = state;
+    props
+      .onLogin(email, password)
+      .then(() => {
+        setError("");
+        navigate("/");
+      })
+      .catch((e) => setError(e.message));
   }
 
   return (
@@ -16,16 +41,20 @@ function Login() {
           id="email"
           name="email"
           type="email"
+          value={state.email}
           className="login__input"
           placeholder="Email"
+          onChange={handleChange}
         />
         <input
           required
           id="password"
           name="password"
           type="password"
+          value={state.password}
           className="login__input"
           placeholder="Пароль"
+          onChange={handleChange}
         />
         <button
           type="submit"
@@ -38,5 +67,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

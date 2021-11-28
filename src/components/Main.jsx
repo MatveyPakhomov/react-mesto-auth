@@ -3,7 +3,7 @@ import { CurrentUserContext } from "../context/CurrentUserContext";
 import profileAvatar from "../images/profile-Avatar.jpg";
 import Card from "./Card";
 
-function Main(props) {
+export default function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
@@ -58,5 +58,3 @@ function Main(props) {
     </main>
   );
 }
-
-export default Main;

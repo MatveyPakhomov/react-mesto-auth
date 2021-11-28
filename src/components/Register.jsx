@@ -1,26 +1,35 @@
 import React from "react";
 import "./styles/Register.css";
-import { Link } from "react-router-dom";
-import * as auth from "../utils/auth";
+import { Link, useNavigate } from "react-router-dom";
 
-function Register() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+export default function Register(props) {
+  const [state, setState] = React.useState({
+    email: "",
+    password: "",
+  });
 
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
+  const navigate = useNavigate();
+  const [error, setError] = React.useState("");
 
-  function handleChangePassword(e) {
-    setPassword(e.target.value);
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     // сюда добавим логику обработки формы регистрации
-    const { email } = setEmail;
-    const { password } = setPassword;
-    auth.register(email, password);
+    const { email, password } = state;
+    props
+      .onRegister(email, password)
+      .then(() => {
+        setError("");
+        navigate("/sign-in");
+      })
+      .catch((e) => setError(e.message));
   }
 
   return (
@@ -32,20 +41,20 @@ function Register() {
           id="email"
           name="email"
           type="email"
-          value={email}
+          value={state.email}
           className="register__input"
           placeholder="Email"
-          onChange={handleChangeEmail}
+          onChange={handleChange}
         />
         <input
           required
           id="password"
           name="password"
           type="password"
-          value={password}
+          value={state.password}
           className="register__input"
           placeholder="Пароль"
-          onChange={handleChangePassword}
+          onChange={handleChange}
         />
         <button
           type="submit"
@@ -64,5 +73,3 @@ function Register() {
     </div>
   );
 }
-
-export default Register;
