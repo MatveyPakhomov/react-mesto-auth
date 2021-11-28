@@ -1,15 +1,12 @@
 import React from "react";
 import "./styles/Register.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Register(props) {
   const [state, setState] = React.useState({
     email: "",
     password: "",
   });
-
-  const navigate = useNavigate();
-  const [error, setError] = React.useState("");
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -23,13 +20,7 @@ export default function Register(props) {
     e.preventDefault();
     // сюда добавим логику обработки формы регистрации
     const { email, password } = state;
-    props
-      .onRegister(email, password)
-      .then(() => {
-        setError("");
-        navigate("/sign-in");
-      })
-      .catch((e) => setError(e.message));
+    props.onRegister(email, password);
   }
 
   return (
@@ -56,11 +47,7 @@ export default function Register(props) {
           placeholder="Пароль"
           onChange={handleChange}
         />
-        <button
-          type="submit"
-          onSubmit={handleSubmit}
-          className="register__submit-button"
-        >
+        <button type="submit" className="register__submit-button">
           Зарегистрироваться
         </button>
         <section className="register__section">

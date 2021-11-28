@@ -25,10 +25,12 @@ export default function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState("");
+  const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userData, setUserData] = React.useState({});
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [infoTooltipData, setInfoTooltipData] = React.useState({});
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -57,6 +59,8 @@ export default function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
+    setIsInfoTooltipOpen(false);
+    setInfoTooltipData({});
   }
 
   function handleCardClick(card) {
@@ -125,40 +129,51 @@ export default function App() {
     return auth
       .authorize(email, password)
       .then((data) => {
-        if (!data) {
-          throw new Error("Что-то пошло не так!");
-        }
         if (data.token) {
           setLoggedIn(true);
           localStorage.setItem("token", data.token);
+          navigate("/");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setInfoTooltipData({
+          className: "fail",
+        });
+        console.log(err);
+      });
   }
 
   function handleRegister(email, password) {
     return auth
       .register(email, password)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 400) {
-          throw new Error("Что-то пошло не так!");
-        }
+      .then(() => {
+        setIsInfoTooltipOpen(true);
+        setInfoTooltipData({
+          className: "success",
+        });
+        navigate("/sign-in");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setInfoTooltipData({
+          className: "fail",
+        });
+        console.log(err);
+      });
   }
 
   function getAuthUserInfo(token) {
     auth
       .getContent(token)
       .then((res) => {
+        setLoggedIn(true);
+        navigate("/");
         setUserData({
           email: res.data.email,
           title: "Выйти",
           link: "/sign-in",
         });
-        setLoggedIn(true);
-        navigate("/");
       })
       .catch((err) => console.log(err));
   }
@@ -166,12 +181,14 @@ export default function App() {
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      //я пока не додумался как решить эту проблему
       getAuthUserInfo(token);
     }
   }, [loggedIn]);
 
   function handleSignOut() {
     localStorage.removeItem("token");
+    setLoggedIn(false)
     navigate("/sign-in");
     setUserData({
       title: "Регистрация",
@@ -207,7 +224,10 @@ export default function App() {
               path="/sign-up"
               element={<Register onRegister={handleRegister} />}
             />
-            <Route element={<Navigate to={!loggedIn ? "sign-in" : "/"} />} />
+            <Route
+              path="*"
+              element={!loggedIn ? <Navigate to="/sign-in" /> : "/"}
+            />
           </Routes>
 
           <Footer />
@@ -233,7 +253,11 @@ export default function App() {
             submitButtonName="Да"
           />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-          <InfoTooltip />
+          <InfoTooltip
+            isOpen={isInfoTooltipOpen}
+            onClose={closeAllPopups}
+            data={infoTooltipData}
+          />
         </div>
       </div>
     </CurrentUserContext.Provider>
