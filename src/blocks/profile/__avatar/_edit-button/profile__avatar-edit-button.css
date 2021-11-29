@@ -7,3 +7,9 @@
   padding: 0;
   margin-right: 30px;
 }
+
+@media screen and (max-width: 619px) {
+  .profile__avatar-edit-button {
+    margin: 0 0 30px 0;
+  }
+}

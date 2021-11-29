@@ -24,7 +24,8 @@ export default function Register(props) {
   }
 
   return (
-    <div className="register">
+    <div className="register page__register">
+      <section className="register__section">
       <h2 className="register__title">Регистрация</h2>
       <form className="register__form" onSubmit={handleSubmit}>
         <input
@@ -50,13 +51,14 @@ export default function Register(props) {
         <button type="submit" className="register__submit-button">
           Зарегистрироваться
         </button>
-        <section className="register__section">
+        <section className="register__signin-section">
           <p className="register__signin">Уже зарегистрированы?</p>
           <Link to="/sign-in" className="register__login-link">
             Войти
           </Link>
         </section>
       </form>
+      </section>
     </div>
   );
 }

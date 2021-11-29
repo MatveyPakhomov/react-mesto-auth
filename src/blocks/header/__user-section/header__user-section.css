@@ -2,3 +2,9 @@
   display: flex;
   margin-top: 5px;
 }
+
+@media screen and (max-width: 918px) {
+  .header__user-section {
+    padding-right: 27px;
+  }
+}

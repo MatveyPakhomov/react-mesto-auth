@@ -1,4 +1,5 @@
-.infoTooltip {
+/* .infoTooltip {
+  font-family: "Inter", "Arial", sans-serif;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.2s, opacity 0.2s;
@@ -10,7 +11,7 @@
   min-width: 320px;
   height: 100%;
   background: #00000080;
-}
+} */
 
 .infoTooltip__container {
   position: relative;
@@ -30,13 +31,21 @@
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 }
 
+@media screen and (max-width: 619px) {
+  .infoTooltip__container {
+    width: 90%;
+    max-width: 280px;
+    padding: 26px 22px;
+    min-height: 308px;
+  }
+}
+
 .infoTooltip_opened {
   visibility: visible;
   opacity: 1;
 }
 
 .infoTooltip__title {
-  font-family: "Inter", "Arial", sans-serif;
   color: black;
   margin: 0;
   padding: 0;
@@ -46,12 +55,25 @@
   text-align: center;
 }
 
+@media screen and (max-width: 619px) {
+  .infoTooltip__title {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+}
+
 .infoTooltip__image {
   min-width: 100%;
   max-width: 120px;
   max-height: 120px;
   margin-bottom: 32px;
   object-fit: contain;
+}
+
+@media screen and (max-width: 619px) {
+  .infoTooltip__image {
+    margin-bottom: 40px;
+  }
 }
 
 .infoTooltip__close-button {
@@ -71,4 +93,14 @@
 
 .infoTooltip__close-button:hover {
   opacity: 0.6;
+}
+
+@media screen and (max-width: 619px) {
+  .infoTooltip__close-button {
+    background: no-repeat center / 100% url('../../images/popup-close-button.svg') transparent;
+    top: -45px;
+    right: -5px;
+    width: 36px;
+    height: 36px;
+  }
 }

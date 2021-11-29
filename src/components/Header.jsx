@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import headerLogo from "../images/header-logo.svg";
 
 export default function Header({ userData, ...props }) {
+
   return (
     <header className="header page__header">
       <section className="header__section">

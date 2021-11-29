@@ -8,7 +8,7 @@ export default function InfoTooltip({ data, ...props }) {
   const failAnswer = "Что-то пошло не так! Попробуйте ещё раз.";
 
   return (
-    <div className={`infoTooltip ${props.isOpen ? "infoTooltip_opened" : ""}`}>
+    <div className={`popup infoTooltip ${props.isOpen ? "infoTooltip_opened" : ""}`}>
       <div className="infoTooltip__container">
         <button
           type="button"

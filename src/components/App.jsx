@@ -63,6 +63,26 @@ export default function App() {
     setInfoTooltipData({});
   }
 
+  React.useEffect(() => {
+    function handleEscClose(evt) {
+      if (evt.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener("keyup", handleEscClose);
+    return () => document.removeEventListener("keyup", handleEscClose);
+  });
+
+  React.useEffect(() => {
+    function handleOverlayClose(evt) {
+      if (evt.target.classList.contains("popup")) {
+        closeAllPopups();
+      }
+    }
+    document.addEventListener("mousedown", handleOverlayClose);
+    return () => document.removeEventListener("mousedown", handleOverlayClose);
+  }, []);
+
   function handleCardClick(card) {
     setSelectedCard(card);
   }
@@ -188,7 +208,7 @@ export default function App() {
 
   function handleSignOut() {
     localStorage.removeItem("token");
-    setLoggedIn(false)
+    setLoggedIn(false);
     navigate("/sign-in");
     setUserData({
       title: "Регистрация",
@@ -203,7 +223,6 @@ export default function App() {
           <Header userData={userData} onSignOut={handleSignOut} />
           <Routes>
             <Route
-              exact
               path="/"
               element={
                 <ProtectedRoute
