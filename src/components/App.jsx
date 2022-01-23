@@ -204,6 +204,8 @@ export default function App() {
       //я пока не додумался как решить эту проблему
       getAuthUserInfo(token);
     }
+  //пока думаю как решить эту проблему
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   function handleSignOut() {
