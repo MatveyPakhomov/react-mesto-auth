@@ -201,11 +201,10 @@ export default function App() {
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      //я пока не додумался как решить эту проблему
       getAuthUserInfo(token);
     }
-  //пока думаю как решить эту проблему
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    //пока думаю как решить эту проблему
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   function handleSignOut() {

@@ -70,9 +70,9 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-27",
+  baseUrl: "http://api.pakhomov.nomoredomains.rocks",
   headers: {
-    authorization: "df65ab57-8f59-4984-a17c-2f08d584d2db",
+    // authorization: "df65ab57-8f59-4984-a17c-2f08d584d2db",
     "Content-Type": "application/json",
   },
 });
