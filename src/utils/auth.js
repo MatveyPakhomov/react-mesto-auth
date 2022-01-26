@@ -1,4 +1,4 @@
-export const BASE_URL = "http://pakhomov.students.nomoredomains.rocks";
+export const baseUrl = "https://api.pakhomov.nomoredomains.rocks";
 
 function checkResponse(res) {
   if (res.ok) {
@@ -8,9 +8,11 @@ function checkResponse(res) {
 }
 
 export const register = (email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
+    credentials: "include",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
@@ -18,8 +20,9 @@ export const register = (email, password) => {
 };
 
 export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -27,12 +30,14 @@ export const authorize = (email, password) => {
   }).then(checkResponse);
 };
 
-export const getContent = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+export const getContent = () => {
+  return fetch(`${baseUrl}/users/me`, {
     method: "GET",
+    credentials: "include",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${document.cookie.search("jwt").value}`,
     },
   })
     .then(checkResponse)

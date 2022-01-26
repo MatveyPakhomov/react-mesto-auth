@@ -34,13 +34,19 @@ export default function App() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCardList()])
-      .then(([userInfo, cardList]) => {
-        setCurrentUser(userInfo);
-        setCards(cardList.map((item) => cardConfig(item)));
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getCardList()])
+        .then(([userInfo, cardList]) => {
+          setCurrentUser(userInfo);
+          setCards(cardList.map((item) => cardConfig(item)));
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
+
+  React.useEffect(() => {
+    checkToken();
+  });
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -148,10 +154,9 @@ export default function App() {
   function handleLogin(email, password) {
     return auth
       .authorize(email, password)
-      .then((data) => {
-        if (data.token) {
+      .then((res) => {
+        if (res) {
           setLoggedIn(true);
-          localStorage.setItem("token", data.token);
           navigate("/");
         }
       })
@@ -163,6 +168,27 @@ export default function App() {
         console.log(err);
       });
   }
+
+  // const handleLogin = ({ password, email }) => {
+  //   auth
+  //     .login(password, email)
+  //     .then((res) => {
+  //       console.log(res.message);
+  //       if (res.message === "Вход совершен успешно") {
+  //         checkToken()
+  //         setIsLoggedIn(true);
+  //         history.push("/");
+  //         setUserEmail(email);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setIsInfoTooltipOpen(true);
+  //       setMessage({
+  //         image: failedReg,
+  //         text: "Что-то пошло не так! Попробуйте ещё раз.",
+  //       });
+  //     });
+  // };
 
   function handleRegister(email, password) {
     return auth
@@ -183,29 +209,56 @@ export default function App() {
       });
   }
 
-  function getAuthUserInfo(token) {
-    auth
-      .getContent(token)
-      .then((res) => {
-        setLoggedIn(true);
-        navigate("/");
-        setUserData({
-          email: res.data.email,
-          title: "Выйти",
-          link: "/sign-in",
+  // function getAuthUserInfo(token) {
+  //   auth
+  //     .getContent(token)
+  //     .then((res) => {
+  //       setLoggedIn(true);
+  //       navigate("/");
+  //       setUserData({
+  //         email: res.data.email,
+  //         title: "Выйти",
+  //         link: "/sign-in",
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     getAuthUserInfo(token);
+  //   }
+  //   //пока думаю как решить эту проблему
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [loggedIn]);
+
+  function checkToken() {
+    const jwt = document.cookie.valueOf("jwt");
+    if (jwt) {
+      console.log(jwt);
+      auth
+        .getContent(jwt)
+        .then((res) => {
+          setUserData({
+            email: res.data.email,
+            title: "Выйти",
+            link: "/sign-in",
+          });
+          setLoggedIn(true);
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => console.log(err));
+    }
   }
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      getAuthUserInfo(token);
+    if (document.cookie.includes("jwt=")) {
+      navigate("/");
     }
-    //пока думаю как решить эту проблему
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn]);
+  }, [navigate]);
 
   function handleSignOut() {
     localStorage.removeItem("token");

@@ -13,12 +13,14 @@ class Api {
 
   getUserInfo() {
     return fetch(this.url + "/users/me", {
+      credentials: "include",
       headers: this.headers,
     }).then(this._checkResponse);
   }
 
   getCardList() {
     return fetch(this.url + "/cards", {
+      credentials: "include",
       headers: this.headers,
     }).then(this._checkResponse);
   }
@@ -26,6 +28,7 @@ class Api {
   setUserInfo(data) {
     return fetch(this.url + "/users/me", {
       method: "PATCH",
+      credentials: "include",
       headers: this.headers,
       body: JSON.stringify(data),
     }).then(this._checkResponse);
@@ -34,6 +37,7 @@ class Api {
   addNewCard(data) {
     return fetch(this.url + "/cards", {
       method: "POST",
+      credentials: "include",
       headers: this.headers,
       body: JSON.stringify(data),
     }).then(this._checkResponse);
@@ -42,6 +46,7 @@ class Api {
   setUserAvatar(data) {
     return fetch(this.url + "/users/me/avatar", {
       method: "PATCH",
+      credentials: "include",
       headers: this.headers,
       body: JSON.stringify(data),
     }).then(this._checkResponse);
@@ -50,29 +55,24 @@ class Api {
   deleteCard(cardId) {
     return fetch(this.url + `/cards/${cardId}`, {
       method: "DELETE",
+      credentials: "include",
       headers: this.headers,
     }).then(this._checkResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    if (!isLiked) {
-      return fetch(this.url + `/cards/likes/${cardId}`, {
-        method: "PUT",
-        headers: this.headers,
-      }).then(this._checkResponse);
-    } else {
-      return fetch(this.url + `/cards/likes/${cardId}`, {
-        method: "DELETE",
-        headers: this.headers,
-      }).then(this._checkResponse);
-    }
+    return fetch(this.url + `/cards/likes/${cardId}`, {
+      method: isLiked ? "DELETE" : "PUT",
+      credentials: "include",
+      headers: this.headers,
+    }).then(this._checkResponse);
   }
 }
 
 const api = new Api({
-  baseUrl: "http://api.pakhomov.nomoredomains.rocks",
+  url: "https://api.pakhomov.nomoredomains.rocks",
   headers: {
-    // authorization: "df65ab57-8f59-4984-a17c-2f08d584d2db",
+    Authorization: `Bearer ${document.cookie.search("jwt").value}`,
     "Content-Type": "application/json",
   },
 });
