@@ -1,4 +1,4 @@
-export const baseUrl =
+export const BASE_URL =
   process.env.NODE_ENV === "production"
     ? "https://api.pakhomov.nomoredomains.rocks"
     : "http://localhost:3000";
@@ -11,7 +11,7 @@ function checkResponse(res) {
 }
 
 export const register = (email, password) => {
-  return fetch(`${baseUrl}/signup`, {
+  return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -23,7 +23,7 @@ export const register = (email, password) => {
 };
 
 export const authorize = (email, password) => {
-  return fetch(`${baseUrl}/signin`, {
+  return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -34,7 +34,7 @@ export const authorize = (email, password) => {
 };
 
 export const getContent = (jwt) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     credentials: "include",
     headers: {
