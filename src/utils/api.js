@@ -70,9 +70,12 @@ class Api {
 }
 
 const api = new Api({
-  url: "https://api.pakhomov.nomoredomains.rocks",
+  baseUrl:
+    process.env.NODE_ENV === "production"
+      ? "https://api.pakhomov.nomoredomains.rocks"
+      : "http://localhost:3000",
   headers: {
-    Authorization: `Bearer ${document.cookie.search("jwt").value}`,
+    Authorization: `${document.cookie.search("jwt").value}`,
     "Content-Type": "application/json",
   },
 });
